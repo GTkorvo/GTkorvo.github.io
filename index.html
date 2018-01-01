@@ -6,99 +6,66 @@ title: Hank Quinlan, Horrible Cop
 For a quick build of EVPath and the software
 components that it depends upon, do the following:</p>
 
-<p class=MsoNormal>In an empty directory which will serve as a build directory,
+<p>In an empty directory which will serve as a build directory,
 do:</p>
 
-<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
-style='font-family:"American Typewriter",serif'>wget</span></span><span
-style='font-family:"American Typewriter",serif'> –q <span
-style='mso-spacerun:yes'> </span><a
-href="https://gtkorvo.github.io/korvo_bootstrap.pl">https://gtkorvo.github.io/korvo_bootstrap.pl</a><o:p></o:p></span></p>
+<pre>
+wget –q https://gtkorvo.github.io/korvo_bootstrap.pl
+perl ./korvo_bootstrap.pl
+perl ./korvo_build.pl
+<pre>
 
-<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
-style='font-family:"American Typewriter",serif'>perl</span></span><span
-style='font-family:"American Typewriter",serif'> ./korvo_bootstrap.pl<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
-style='font-family:"American Typewriter",serif'>perl</span></span><span
-style='font-family:"American Typewriter",serif'> ./korvo_build.pl<o:p></o:p></span></p>
-
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
-
-<p class=MsoNormal>Doing this will build and install EVPath with $HOME as the
-installation directory.<span style='mso-spacerun:yes'>  </span>By default, this
+<p>Doing this will build and install EVPath with $HOME as the
+installation directory.  By default, this
 will build the most current stable release of EVPath, along with FFS (an efficient
 data marshaling package), ATL (a name/value attribute list library), DILL
-(dynamic code generation used by FFS<span class=GramE>), <span
-style='mso-spacerun:yes'> </span>and</span> CERCS_ENV (a support package).<span
-style='mso-spacerun:yes'>  </span><span style='mso-spacerun:yes'> </span>By
+(dynamic code generation used by FFS), and CERCS_ENV (a support package).  By
 default, it also builds one package of external origin, a modified version of
-ENET (http://enet.bespin.org/index.html, a reliable UDP package written by Lee <span
-class=SpellE>Salzman</span>).<span style='mso-spacerun:yes'>   </span>This
-basic set of packages is sufficient for most casual uses of EVPath.</p>
+ENET (http://enet.bespin.org/index.html, a reliable UDP package written by Lee Salzman).
+This basic set of packages is sufficient for most casual uses of EVPath.</p>
 
 <H1>Architecture Support</H1>
 
-<p class=MsoNormal>FFS (Fast Flexible Serialization) relies upon DILL’s dynamic
+<p>FFS (Fast Flexible Serialization) relies upon DILL’s dynamic
 code generation to provide fast translation between wire and native data
-formats.<span style='mso-spacerun:yes'>  </span>DILL can generate code for 32-
-and 64-bit x86 architectures, ia64, PowerPC, <span class=SpellE>Sparc</span>
-and ARM architectures.<span style='mso-spacerun:yes'>  </span>FFS can be used
+formats.  DILL can generate code for 32-
+and 64-bit x86 architectures, ia64, PowerPC, Sparc
+and ARM architectures.  FFS can be used
 on an unsupported processor architecture, but in this case DILL requires a
-foreign function interface support provided by <span class=SpellE>libffi</span>
-(<a href="https://sourceware.org/libffi/)">https://sourceware.org/libffi/)</a>.<span
-style='mso-spacerun:yes'>  </span>FFI must be build and installed prior to the
+foreign function interface support provided by libffi
+(<a href="https://sourceware.org/libffi/)">https://sourceware.org/libffi/)</a>.
+FFI must be build and installed prior to the
 kovro_build.pl invocation.</p>
 
 <H1>Non-TCP/IP Network Support</H1>
 
-<p class=MsoNormal>EVPath supports a number of underlying network transports,
-but does not choose between them automatically.<span style='mso-spacerun:yes'> 
-</span>Instead, it provides mechanisms for higher-level tools to choose.<span
-style='mso-spacerun:yes'>  </span>However, what choices are available depends
-upon what software is found by EVPath at build time.<span
-style='mso-spacerun:yes'>  </span>The ENET reliable UDP library is one such
-software package that is simply built by EVPath by default, providing an “<span
-class=SpellE>enet</span>” network transport for EVPath.<span
-style='mso-spacerun:yes'>  </span>Additionally, if EVPath is configured on a
-machine with an <span class=SpellE>Infiniband</span> Verbs library, it will
-build a native “<span class=SpellE>ib</span>” transport.</p>
+<p>EVPath supports a number of underlying network transports,
+but does not choose between them automatically.
+Instead, it provides mechanisms for higher-level tools to choose.  However, what choices are available depends
+upon what software is found by EVPath at build time.  The ENET reliable UDP library is one such
+software package that is simply built by EVPath by default, providing an “enet” network transport for EVPath.
+Additionally, if EVPath is configured on a
+machine with an Infiniband Verbs library, it will
+build a native “ib” transport.</p>
 
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+<p>Another possible transport, “nnti”, is built on the <b
+ style='mso-bidi-font-weight:normal'>NNTI</b> RDMA wrapper library derived
+Trios in Trilinos <a
+ href="https://trilinos.org/packages/trios/)">https://trilinos.org/packages/trios/)</a>. NNTI
+can only build successfully on hosts with RDMA interfaces, and is largely
+deprecated, but it is currently one of the few RDMA transports for EVPath on
+Titan (an ORNL supercomputer). NNTI can be built by editing the
+“korvo_build_config” file after korvo_bootstrapand removing the comment
+character (‘%’) in front of the ‘nnti’ entry in the ‘BUILDLIST’ section.</p>
 
-<p class=MsoNormal>Another possible transport, “<span class=SpellE>nnti</span>”,
-is built on the <b style='mso-bidi-font-weight:normal'>NNTI</b> RDMA wrapper
-library derived Trios in Trilinos <a
-href="https://trilinos.org/packages/trios/)">https://trilinos.org/packages/trios/)</a>.<span
-style='mso-spacerun:yes'>  </span>NNTI can only build successfully on hosts
-with RDMA interfaces, and is largely deprecated, but it is currently one of the
-few RDMA transports for EVPath on Titan (an ORNL supercomputer).<span
-style='mso-spacerun:yes'>  </span>NNTI can be built by editing the “<span
-class=SpellE>korvo_build_config</span>” file after <span class=SpellE>korvo_bootstrap</span>
-and removing the comment character (‘%’) in front of the ‘<span class=SpellE>nnti</span>’
-entry in the ‘BUILDLIST’ section.</p>
-
-<p class=MsoNormal><o:p>&nbsp;</o:p></p>
-
-<p class=MsoNormal>A third possible RDMA transport for EVPath is based upon <span
-class=SpellE><b style='mso-bidi-font-weight:normal'>Libfabric</b></span>, <span
-style='font-size:10.5pt;font-family:"Helvetica Neue",sans-serif;mso-fareast-font-family:
-"Times New Roman";color:#333333;background:white'>developed by the OFI Working
-Group, a subgroup of the&nbsp;</span></span><span style='mso-fareast-font-family:
-"Times New Roman"'><a href="http://www.openfabrics.org/" style='outline: 0px;
-font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;text-align:
-start;widows: 2;-webkit-text-stroke-width: 0px;word-spacing:0px'><span
-class=SpellE><span style='font-size:10.5pt;font-family:"Helvetica Neue",sans-serif;
-color:#005580;background:white'>OpenFabrics</span></span><span
-style='font-size:10.5pt;font-family:"Helvetica Neue",sans-serif;color:#005580;
-background:white'> Alliance - OFA</span></a>.<span style='mso-spacerun:yes'> 
-</span>If <span class=SpellE>libfabric</span> is built and installed in a
-visible location prior to building EVPath, the “fabric” transport will be built
-and installed with EVPath. <span class=SpellE>Libfabric</span> can be
-downloaded here: <a href="https://ofiwg.github.io/libfabric/">https://ofiwg.github.io/libfabric/</a>.<span
-style='mso-spacerun:yes'>  </span><span
-style='mso-spacerun:yes'> </span>Currently the EVPath fabric transport is known
-to function only over <span class=SpellE>libfabric’s</span> VERBS and SOCKETS
-providers.<o:p></o:p></span></p>
+<p>A third possible RDMA transport for EVPath is based upon Libfabric,
+developed by the OFI Working Group, a subgroup of the <a
+ href="http://www.openfabrics.org/"> OpenFabrics Alliance - OFA.  If
+libfabric is built and installed in a visible location prior to building
+EVPath, the “fabric” transport will be built and installed with
+EVPath. Libfabric can be downloaded here: <a
+ href="https://ofiwg.github.io/libfabric/">https://ofiwg.github.io/libfabric/</a>.
+Currently the EVPath fabric transport is known to function only over
+libfabric’s VERBS and SOCKETS providers.
 
 </div><!-- /.blurb -->
