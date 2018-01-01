@@ -3,7 +3,7 @@ layout: default
 title: GTKorvo
 ---
     		</div><!-- /.blurb -->
-For a quick build of EVPath and the software
+<p>For a quick build of EVPath and the software
 components that it depends upon, do the following:</p>
 
 <p>In an empty directory which will serve as a build directory,
@@ -13,7 +13,7 @@ do:</p>
 wget –q https://gtkorvo.github.io/korvo_bootstrap.pl
 perl ./korvo_bootstrap.pl
 perl ./korvo_build.pl
-<pre>
+</pre>
 
 <p>Doing this will build and install EVPath with $HOME as the
 installation directory.  By default, this
@@ -24,7 +24,7 @@ default, it also builds one package of external origin, a modified version of
 ENET (http://enet.bespin.org/index.html, a reliable UDP package written by Lee Salzman).
 This basic set of packages is sufficient for most casual uses of EVPath.</p>
 
-<H1>Architecture Support</H1>
+<H2>Architecture Support</H2>
 
 <p>FFS (Fast Flexible Serialization) relies upon DILL’s dynamic
 code generation to provide fast translation between wire and native data
@@ -37,7 +37,7 @@ foreign function interface support provided by libffi
 FFI must be build and installed prior to the
 kovro_build.pl invocation.</p>
 
-<H1>Non-TCP/IP Network Support</H1>
+<H2>Non-TCP/IP Network Support</H2>
 
 <p>EVPath supports a number of underlying network transports,
 but does not choose between them automatically.
