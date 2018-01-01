@@ -33,11 +33,11 @@ code generation to provide fast translation between wire and native data
 formats.  DILL can generate code for 32-
 and 64-bit x86 architectures, ia64, PowerPC, Sparc
 and ARM architectures.  FFS can be used
-on an unsupported processor architecture, but in this case DILL requires a
+on an unsupported processor architecture, but in this case DILL requires the
 foreign function interface support provided by libffi
 (<a href="https://sourceware.org/libffi/)">https://sourceware.org/libffi/)</a>.
 FFI must be build and installed prior to the
-kovro_build.pl invocation.</p>
+korvo_build.pl invocation.</p>
 
 <H2>Non-TCP/IP Network Support</H2>
 
@@ -68,6 +68,7 @@ EVPath, the “fabric” transport will be built and installed with
 EVPath. Libfabric can be downloaded here: <a
  href="https://ofiwg.github.io/libfabric/">https://ofiwg.github.io/libfabric/</a>.
 Currently the EVPath fabric transport is known to function only over
-libfabric’s VERBS and SOCKETS providers.
+libfabric’s VERBS and SOCKETS providers.  As with libffi, libfabric must be built and installed prior to the korvo_build invocation.
+    
 
 </div><!-- /.blurb -->
