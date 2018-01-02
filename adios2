@@ -1,0 +1,17 @@
+--- layout: default title: GTKorvo for ADIOS2 ---
+ADIOS 2.0 has a streaming transport mechanism called SST (Simplified Streaming Transport).  
+SST's control plane is built on the EVPath messaging library built by Georgia Tech's Korvo group.
+For a quick build of EVPath and the GTkorvo software components that it depends upon, follow the instructions below. 
+(These are standard GTkorvo build instructions, with with a version tag of 'adios2' and $HOME specified as the 
+install directory on the command line.  You can substite a different install directory for $HOME.)
+
+In an empty directory which will serve as a build directory, do:
+
+wget –q https://gtkorvo.github.io/korvo_bootstrap.pl
+perl ./korvo_bootstrap.pl adios2 $HOME
+perl ./korvo_build.pl
+Doing this will build and install EVPath with $HOME as the installation directory. 
+This will build the most current stable release of EVPath, along with FFS (an efficient data marshaling package), 
+ATL (a name/value attribute list library), DILL (dynamic code generation used by FFS), and CERCS_ENV (a support package). 
+By default, it also builds one package of external origin, a modified version of ENET (http://enet.bespin.org/index.html, 
+a reliable UDP package written by Lee Salzman). This basic set of packages is sufficient for ADIOS2's use of EVPath.
