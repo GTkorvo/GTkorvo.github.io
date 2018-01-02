@@ -1,0 +1,202 @@
+#!/bin/sh
+if test -z "$1"; then
+  UNAME_MACHINE=`(uname -m) 2>/dev/null` || UNAME_MACHINE=unknown
+  UNAME_RELEASE=`(uname -r) 2>/dev/null` || UNAME_RELEASE=unknown
+  UNAME_SYSTEM=`(uname -s) 2>/dev/null` || UNAME_SYSTEM=unknown
+  UNAME_VERSION=`(uname -v) 2>/dev/null` || UNAME_VERSION=unknown
+else
+  UNAME_MACHINE="$1";
+  UNAME_SYSTEM="$2";
+  UNAME_RELEASE="$3";
+  UNAME_VERSION="";
+fi
+cercs_cv_machine_target="${UNAME_MACHINE}-${UNAME_SYSTEM}-${UNAME_RELEASE}-${UNAME_VERSION}"
+case "$cercs_cv_machine_target" in
+    Power*-Darwin-*)
+		cercs_cv_machine_target="powerpc-apple-darwin${UNAME_RELEASE}";;
+    i[345]86*-Darwin-*)
+		darwin_ver=`sw_vers | grep ProductVersion | sed 's/.*:[^0-9]*//;s/\.[0-9]*//2'`
+		if test "x$CC" == "x" ; then
+		   CC="cc"
+		   # only 32-bit if compiler is set right
+		   echo 'int main(){printf("%d", sizeof(char*));}'>/tmp/$$.c
+		   $CC $CFLAGS -o /tmp/$$ /tmp/$$.c 1>/dev/null 2>&1
+		   if test -x /tmp/$$ ; then
+		      if test x`/tmp/$$ 2>&1` = "x4"; then
+		         darwin_ver=${darwin_ver}-32
+		      fi
+		   fi
+		   rm -f /tmp/$$ /tmp/$$.c /tmp/$$.o
+		fi
+                cercs_cv_machine_target="intel-apple-darwin$darwin_ver";;
+    x86_64-Darwin-*)
+		darwin_ver=`sw_vers | grep ProductVersion | sed 's/.*:[^0-9]*//;s/\.[0-9]*//2'`
+		if test "x$CC" == "x" ; then
+		   CC="cc"
+		   # only 32-bit if compiler is set right
+		   echo 'int main(){printf("%d", sizeof(char*));}'>/tmp/$$.c
+		   $CC $CFLAGS -o /tmp/$$ /tmp/$$.c 1>/dev/null 2>&1
+		   if test -x /tmp/$$ ; then
+		      if test x`/tmp/$$ 2>&1` = "x4"; then
+		         darwin_ver=${darwin_ver}-32
+		      fi
+		   fi
+		   rm -f /tmp/$$ /tmp/$$.c /tmp/$$.o
+		fi
+                cercs_cv_machine_target="intel-apple-darwin$darwin_ver";;
+    i[34]86-AIX-*-*)
+	cercs_cv_machine_target=i386-ibm-aix;;
+    *-AIX-2-3)
+	if grep bos325 /usr/include/stdio.h >/dev/null 2>&1; then
+		cercs_cv_machine_target=rs6000-ibm-aix3.2.5
+	elif grep bos324 /usr/include/stdio.h >/dev/null 2>&1; then
+		cercs_cv_machine_target=rs6000-ibm-aix3.2.4
+	else
+		cercs_cv_machine_target=rs6000-ibm-aix3.2
+	fi;;
+    *-AIX-*-4)
+	if /usr/sbin/lsattr -EHl proc0 | grep POWER >/dev/null 2>&1; then
+		IBM_ARCH=rs6000
+	else
+		IBM_ARCH=powerpc
+	fi
+	if grep bos410 /usr/include/stdio.h >/dev/null 2>&1; then
+		IBM_REV=4.1
+	elif grep bos411 /usr/include/stdio.h >/dev/null 2>&1; then
+		IBM_REV=4.1.1
+	else
+		IBM_REV=4.${UNAME_RELEASE}
+	fi
+	cercs_cv_machine_target=${IBM_ARCH}-ibm-aix${IBM_REV};;
+    *-AIX-*-*)
+	cercs_cv_machine_target=rs6000-ibm-aix;;
+    *-IRIX*-*-*)
+	cercs_cv_machine_target=mips`echo ${UNAME_MACHINE}|sed -e 's/IP//g'`-sgi-irix`echo ${UNAME_RELEASE}|sed -e 's/-/_/g'`;;
+esac
+case "$cercs_cv_machine_target" in
+    i960-wrs-vxworks-* )
+        cercs_cv_archive=i960-vxworks;;
+    sun4*-SunOS-4* )
+    	cercs_cv_archive=sparc;;
+    sun4u-SunOS-* )
+    	cercs_cv_archive=${UNAME_MACHINE}-`echo ${UNAME_RELEASE} |sed 's/\([0-9]*\.[0-9]*\)\.[0-9]*/\1/g'`
+	case "${UNAME_RELEASE}" in
+		5.[789] | 5.1[01234] ) 
+		cercs_cv_archive=sun`echo ${UNAME_RELEASE} | sed 's/5.//'`
+		if test "x$CC" != "x" -a "x`isainfo`" != "xsparc"; then
+		   # only 64-bit if compiler is set right
+		   echo 'int main(){printf("%d", sizeof(char*));}'>/tmp/$$.c
+		   $CC $CFLAGS -o /tmp/$$ /tmp/$$.c 1>/dev/null 2>&1
+		   if test -x /tmp/$$ ; then
+		      if test x`/tmp/$$ 2>&1` = "x8"; then
+		         cercs_cv_archive=${cercs_cv_archive}-64
+		      fi
+		   fi
+		   rm -f /tmp/$$ /tmp/$$.c /tmp/$$.o
+		fi
+	esac;;
+    sun4*-SunOS-* )
+    	cercs_cv_archive=sun4-`echo ${UNAME_RELEASE} |sed 's/\([0-9]*\.[0-9]*\)\.[0-9]*/\1/g'`;;
+    ksr1-*)
+	cercs_cv_archive=ksr;;
+    ksr2-*)
+	cercs_cv_archive=ksr;;
+    *-irix4.*)
+	cercs_cv_archive=irix4;;
+    mips22-sgi-irix5.*)
+	cercs_cv_archive=irix5;;
+    mips21-sgi-irix5.*)
+	cercs_cv_archive=irix5-64;;
+    *-sgi-irix6.*)
+        echo "ABI _MIPS_SIM _MIPS_SZLONG" > /tmp/tmp$$
+	mipsnum=`cc -E /tmp/tmp$$ | grep ABI | sed -e 's/ //g' -e s/ABI//g`
+        if test -n "$mipsnum" ; then
+	    if test "$mipsnum" -eq "132"; then
+		cercs_cv_archive=irix6;
+	    elif test "$mipsnum" -eq "232 "; then
+		cercs_cv_archive=irix6-n32;
+	    elif test "$mipsnum" -eq "364 "; then
+		cercs_cv_archive=irix6-64;
+	    else
+	        echo mpisnum is =$mipsnum=
+	    fi
+	else
+	    cercs_cv_archive=irix6-64;
+	fi;;
+    *-AIX-*)
+	cercs_cv_archive=rs6000;;
+    i[34567]86-Linux-*-*)
+	cercs_cv_archive=linux
+        if test -f "/etc/redhat-release" ; then
+	    release=`sed 's/[^ ]* [^ ]* [^ ]* [^ ]* //;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 7 ; then
+		cercs_cv_archive="rh$release";
+	    fi
+	    release=`sed 's/Fedora Core release[ ]*//;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 0 ; then
+		cercs_cv_archive="fc$release";
+	    fi
+	    release=`sed 's/Fedora release[ ]*//;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 0 ; then
+		cercs_cv_archive="fc$release";
+	    fi
+	    release=`sed 's/Red Hat Enterprise Linux .* release[ ]*//;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 0 ; then
+		cercs_cv_archive="rhe$release";
+	    fi
+	elif test -f "/etc/lsb-release" ; then
+	    release=`grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//;s/\.[0-9]*//'`
+	    cercs_cv_archive="ub$release";
+	fi;;
+    x86_64-Linux-*-*)
+	cercs_cv_archive=linux
+        if test -f "/etc/redhat-release" ; then
+	    release=`sed 's/[^ ]* [^ ]* [^ ]* [^ ]* //;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 7 ; then
+		cercs_cv_archive="rh$release-64";
+	    fi
+	    release=`sed 's/Fedora Core release[ ]*//;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 0 ; then
+		cercs_cv_archive="fc$release-64";
+	    fi
+	    release=`sed 's/Fedora release[ ]*//;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 0 ; then
+		cercs_cv_archive="fc$release-64";
+	    fi
+	    release=`sed 's/Red Hat Enterprise Linux .* release[ ]*//;s/[^0-9].*//' /etc/redhat-release`
+	    if test 0"$release" -gt 0 ; then
+		cercs_cv_archive="rhe$release-64";
+	    fi
+	elif test -f "/etc/lsb-release" ; then
+	    release=`grep DISTRIB_RELEASE /etc/lsb-release | sed 's/DISTRIB_RELEASE=//;s/\.[0-9]*//'`
+	    cercs_cv_archive="ub$release-64";
+	fi;;
+    [345]86-Windows_NT-*-*)
+	cercs_cv_archive=winnt;;
+    *darwin*)
+        cercs_cv_archive=`echo $cercs_cv_machine_target | sed 's/.*-apple-//'`;;
+    *-*-*)
+	cercs_cv_archive=`echo $cercs_cv_machine_target | sed 's/-.*//'`;;
+esac
+if test "x$CC" != "x"; then
+    # see if we're using icc
+    ( $CC --version 2>&1 ) > /tmp/ccout$$
+    grep '(ICC)' /tmp/ccout$$ > /dev/null 2>&1 && cercs_cv_archive=${cercs_cv_archive}-icc
+    rm -f /tmp/ccout$$
+fi
+HOSTNAME=`hostname`
+nslookup $HOSTNAME > /tmp/hostout$$
+grep -q ccs.ornl.gov /tmp/hostout$$
+if [ $? -eq 0 ]; then
+   cercs_cv_archive=`hostname | sed 's/[0-9-].*//'`
+   CC="cc"
+   if test "${cercs_cv_archive}" == "titan"; then
+    ( $CC -v 2>&1 ) > /tmp/ccout$$
+    grep 'icc version' /tmp/ccout$$ > /dev/null 2>&1 && cercs_cv_archive=${cercs_cv_archive}-icc
+    grep 'PGI' /tmp/ccout$$ > /dev/null 2>&1 && cercs_cv_archive=${cercs_cv_archive}-pgi
+    grep '(GCC)' /tmp/ccout$$ > /dev/null 2>&1 && cercs_cv_archive=${cercs_cv_archive}-gnu
+   fi
+fi
+rm /tmp/hostout$$
+
+echo $cercs_cv_archive

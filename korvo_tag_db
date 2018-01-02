@@ -1,0 +1,102 @@
+$korvo_tag{"development"} = "dill:HEAD cercs_env:HEAD atl:HEAD ffs:HEAD
+	enet:HEAD nnti:HEAD df_shm:HEAD evpath:HEAD soapstone:HEAD echo2:HEAD
+	comm_group:HEAD cmrpc:HEAD pds:HEAD gs:HEAD lgs:HEAD amaze:HEAD libbench:HEAD";
+$korvo_tag{"stable"} = " dill:f2ba97ae97f4d6f5d8804e7d54b7374ec4278168
+	cercs_env:0e7d5d41fe573bb6776b4b531ea4cbecfd0b107d
+	atl:ceec090032cf0844dda6681dbd23b60f2fea752a ffs:fb8427deadf576b5c546c7818e3f048049362a67
+	evpath:906a4dbfab1d610a5fa46f8193caffd4e19aa23f echo2:26665 comm_group:26665 cmrpc:26665
+	pds:26665 gs:26665 nnti:a7f43ebe8e909087f080c281931035045ae4ab53
+	enet:ce2148945b6a069b3990faca45f1ecfe67d12f03 lgs:26665 libbench:26665";
+$korvo_tag{"evpath-3.2"} = "dill:7f6f12e583cdfe529b502a6fdaefd60eaec51d3b
+    cercs_env:44c14b09005bee9a5a32a4c8b97f4e023a24028e
+    atl:7a70d96d356a2b7e8d6ff643a3e2bd5757708e3c
+    ffs:936609f0fe06d515781eff1d985204d1e853fe4b
+    enet:fa7756946e5b57dd8ab0ec6a181866555e5bbcdd
+    nnti:cbbb1305be78cad0bfb0dbf8f175c1db7d530b80 df_shm:r14457
+    evpath:a9d5c9282f7569d6ac2856caed09085044558aed soapstone:r14457
+    echo2:r14457 comm_group:r14457 cmrpc:r14457 pds:r14457 gs:r14457
+    lgs:r14457 amaze:r14457 libbench:r14457"; 
+$korvo_projects_override{"evpath-3.2"} = "dill cercs_env gen_thread atl ffs enet evpath";
+$korvo_tag{"evpath-3.3"} = "dill:0cb6e1328868823bbd992b23049b6c718a105aa3
+    cercs_env:afb11f6eea9d0efa7fb5fa77239e9f34fb17b32b
+    atl:32607eaaa1677d4a89246b9f59c87fc337d7ccd9
+    ffs:03fd944989d6fbd27a18d06b255bb89622ab9f75
+    enet:645713b0efafd07167986f0752fe46d2e4187b6b
+    nnti:33831b49bc0cc62080aebc8e48f5e478d0a32a27 df_shm:r17917
+    evpath:56be41ac29ad5d0508f40048d4ce539abab00643 soapstone:r17917
+    echo2:r17917 comm_group:r17917 cmrpc:r17917 pds:r17917 gs:r17917
+    lgs:r17917 amaze:r17917 libbench:r17917"; 
+$korvo_projects_override{"evpath-3.3"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios-1.7"} = "dill:0cb6e1328868823bbd992b23049b6c718a105aa3
+    cercs_env:afb11f6eea9d0efa7fb5fa77239e9f34fb17b32b
+    atl:32607eaaa1677d4a89246b9f59c87fc337d7ccd9
+    ffs:03fd944989d6fbd27a18d06b255bb89622ab9f75
+    enet:645713b0efafd07167986f0752fe46d2e4187b6b
+    nnti:33831b49bc0cc62080aebc8e48f5e478d0a32a27 df_shm:r17917
+    evpath:56be41ac29ad5d0508f40048d4ce539abab00643 soapstone:r17917
+    echo2:r17917 comm_group:r17917 cmrpc:r17917 pds:r17917 gs:r17917
+    lgs:r17917 amaze:r17917 libbench:r17917"; 
+$korvo_projects_override{"adios-1.7"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios-1.8"} = "dill:1793d5d3dfbd39699a4373c607fbd841b28705ba
+    cercs_env:897a9ab8c793c7883af99bc705c240e504821c7b
+    atl:157fb917fda9f87b3e65d20d0c12fb265a561006
+    ffs:43f715946c9208c5742b0cd737905bf80e78fd1a
+    enet:bb31ca32c8c4720d1a66e6337e11859d8c276b45
+    nnti:032430452cda93be89ff92019cd75cb26d6a4501
+    evpath:c0576e088f89c928eefa8dfa023d73011ba3e9de echo2:21159
+    comm_group:21159 cmrpc:21159 pds:21159 gs:21159 lgs:21159
+    libbench:21159"; 
+$korvo_projects_override{"adios-1.8"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios-1.9"} = "dill:a3f39ea3bf9b4c18f40970257aefab5b8e73552a
+    cercs_env:294225dd77929c60d60aace9e61311fc88c41a1c
+    atl:944113212cb45e444f73135ee2a775375b94940a
+    ffs:0c2003b1bf92444a684e3ec5fe2de45c795e1438
+    enet:bb31ca32c8c4720d1a66e6337e11859d8c276b45
+    nnti:032430452cda93be89ff92019cd75cb26d6a4501
+    evpath:2a424a18dee8397dcffd74d7daaeb0f438e0afcd echo2:22400
+    comm_group:22400 cmrpc:22400 pds:22400 gs:22400 lgs:22400
+    libbench:22400"; 
+$korvo_projects_override{"adios-1.9"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios-1.10"} = "dill:a3f39ea3bf9b4c18f40970257aefab5b8e73552a
+    cercs_env:294225dd77929c60d60aace9e61311fc88c41a1c
+    atl:944113212cb45e444f73135ee2a775375b94940a
+    ffs:5a7548ca5da995977f3efabd41f0d0fa99fedd5d
+    enet:bb31ca32c8c4720d1a66e6337e11859d8c276b45
+    nnti:a7f43ebe8e909087f080c281931035045ae4ab53
+    evpath:da89e7cf271f0a430eb3d68ac58b759d15be2a4b echo2:24546
+    comm_group:24546 cmrpc:24546 pds:24546 gs:24546 lgs:24546
+    libbench:24546"; 
+$korvo_projects_override{"adios-1.10"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios-1.11"} = "dill:a3f39ea3bf9b4c18f40970257aefab5b8e73552a
+    cercs_env:294225dd77929c60d60aace9e61311fc88c41a1c
+    atl:538af6cf06c32372938effab17b3727bbb67befc
+    ffs:c76be1cde3c569c36db58507f291b138395b6e8c
+    enet:bb31ca32c8c4720d1a66e6337e11859d8c276b45
+    nnti:a7f43ebe8e909087f080c281931035045ae4ab53
+    evpath:f6a6b229dfd84e8cc59bfc0c6eaeb94be4a1067f echo2:25908
+    comm_group:25908 cmrpc:25908 pds:25908 gs:25908 lgs:25908
+    libbench:25908"; 
+$korvo_projects_override{"adios-1.11"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios-1.12"} = "dill:6cd2d96252bbb66c06e43bf847558e4061d1d786
+    cercs_env:9b21e617a4845db2048f45000cc869e27c960966
+    atl:ceec090032cf0844dda6681dbd23b60f2fea752a
+    ffs:0aeedb707672cc9a9404091d9ed1f2a7bd518a35
+    evpath:3cc693b665d8111fe5c4eb36f0dd299b8c053487 echo2:26925
+    comm_group:26925 cmrpc:26925 pds:26925 gs:26925
+    nnti:a7f43ebe8e909087f080c281931035045ae4ab53
+    enet:bb31ca32c8c4720d1a66e6337e11859d8c276b45 lgs:26925 libbench:26925"; 
+$korvo_projects_override{"adios-1.12"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios-1.13"} = " dill:f2ba97ae97f4d6f5d8804e7d54b7374ec4278168
+	cercs_env:0e7d5d41fe573bb6776b4b531ea4cbecfd0b107d
+	atl:ceec090032cf0844dda6681dbd23b60f2fea752a ffs:fb8427deadf576b5c546c7818e3f048049362a67
+	evpath:f16a0e98be319d6df5165724461d798e57f083d2 echo2:26665 comm_group:26665 cmrpc:26665
+	pds:26665 gs:26665 nnti:a7f43ebe8e909087f080c281931035045ae4ab53
+	enet:ce2148945b6a069b3990faca45f1ecfe67d12f03 lgs:26665 libbench:26665";
+$korvo_projects_override{"adios-1.13"} = "dill cercs_env atl ffs enet evpath";
+$korvo_tag{"adios2"} = " dill:f2ba97ae97f4d6f5d8804e7d54b7374ec4278168
+	cercs_env:0e7d5d41fe573bb6776b4b531ea4cbecfd0b107d
+	atl:ceec090032cf0844dda6681dbd23b60f2fea752a ffs:fb8427deadf576b5c546c7818e3f048049362a67
+	evpath:906a4dbfab1d610a5fa46f8193caffd4e19aa23f echo2:26665 comm_group:26665 cmrpc:26665
+	pds:26665 gs:26665 nnti:a7f43ebe8e909087f080c281931035045ae4ab53
+	enet:ce2148945b6a069b3990faca45f1ecfe67d12f03 lgs:26665 libbench:26665";
+$korvo_projects_override{"adios2"} = "dill cercs_env atl ffs enet evpath";
