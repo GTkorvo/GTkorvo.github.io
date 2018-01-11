@@ -742,6 +742,7 @@ sub update_file {
       $has_lwp = eval
 	{
 	  require LWP::UserAgent;
+	  require LWP::Protocol::https;
 	  LWP::UserAgent->new();
 	  1;
 	};
