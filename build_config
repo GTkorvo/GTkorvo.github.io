@@ -15,7 +15,6 @@ VERSION_TAG=stable
 %BUILDLIST
 % project	repository
 dill		korvogithub
-cercs_env	korvogithub
 atl		korvogithub
 ffs		korvogithub
 enet		korvogithub
