@@ -31,7 +31,7 @@ my $build_config_open = 0;
 our %korvo_tag;
 
 my ($RESULTS_FILES_DIR, $BUILD_AREA, $EVPATH_TEST_INSTALL_DIR, $VERSION_TAG, $INSTALL_DIRECTORY, @projects);
-my (%spec, %tool, %cmake_args, $OVERRIDE_VERSION, $OVERRIDE_DISABLE_TESTING, $stop_on_failure);
+my (%spec, %tool, %cmake_args, %config_args, $OVERRIDE_VERSION, $OVERRIDE_DISABLE_TESTING, $stop_on_failure);
 
 $OVERRIDE_DISABLE_TESTING = 0;
 
@@ -191,7 +191,6 @@ if (!$quiet) {
   dump_config();
 }
 
-my %config_args = ();
 my $host = `hostname`;
 chop ($host);
 $host =~ s/^\s*//g;
@@ -357,8 +356,9 @@ while(my $project = shift(@projects)) {
 	$config_command = "cmake $eval_args $src_dir 1>>$results 2>&1";
     } else {
         my $args = '"';
+	printf("Doing configure build fore repository $repository, args is $config_args{$repository}\n");
 	if (defined($config_args{$repository})) {
-	    $args.= ".$config_args{$repository}";
+	    $args.= "$config_args{$repository}";
 	}
 	if ($enable_debug_build > 0) {
 	  $args.= " CFLAGS='-g -O0' CPPFLAGS='-g -O0' "
@@ -693,10 +693,6 @@ sub check_needed_commands {
   my $cmake_found = `which cmake`;
   my $svn_found = `which svn`;
   my $git_found = `which git`;
-  my $flex_found = `which flex`;
-  my $lex_found = `which lex`;
-  my $yacc_found = `which yacc`;
-  my $bison_found = `which bison`;
   my $exit = 0;
   if ("$make_found" eq "") {
     printf("Didn't find 'make', required for build\n"); $exit++;
@@ -709,17 +705,8 @@ sub check_needed_commands {
       printf("EVPath build requires CMake 3.0 or higher\n"); $exit++;
     }
   }
-  if ("$svn_found" eq "") {
-    printf("Didn't find 'svn', required for build\n"); $exit++;
-  }
   if ("$git_found" eq "") {
     printf("Didn't find 'git', required for build\n"); $exit++;
-  }
-  if (("$flex_found" eq "") and ("$lex_found" eq "")){
-    printf("Didn't find either of 'flex' or 'lex', these are required for FFS, which is required for EVPath\n"); $exit++;
-  }
-  if (("$yacc_found" eq "") and ("$bison_found" eq "")){
-    printf("Didn't find either of 'yacc' or 'bison', these are required for FFS, which is required for EVPath\n"); $exit++;
   }
   ($exit == 0) || die("Some required components missing, korvo_build aborted");
 }
