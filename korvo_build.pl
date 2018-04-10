@@ -722,6 +722,48 @@ sub check_needed_commands {
     printf("Didn't find either of 'yacc' or 'bison', these are required for FFS, which is required for EVPath\n"); $exit++;
   }
   ($exit == 0) || die("Some required components missing, korvo_build aborted");
+    open(HOUT, ">/tmp/". $$ . "CrayPEWarn.cmake") || die "Can't cmake";
+print HOUT<<EOF;
+if(CMAKE_SYSTEM_NAME STREQUAL "CrayLinuxEnvironment" OR
+   DEFINED ENV{CRAYOS_VERSION} OR
+   DEFINED ENV{XTOS_VERSION} OR
+   EXISTS /etc/opt/cray/release/cle-release OR
+   EXISTS /etc/opt/cray/release/clerelease)
+  if(NOT (CMAKE_VERSION VERSION_GREATER 3.5))
+    message(STATUS "WARNING")
+    message(STATUS "WARNING It looks like you're building on a Cray but using")
+    message(STATUS "WARNING a version of CMake prior to proper integration")
+    message(STATUS "WARNING with the CrayPE compiler wrappers.  If targeting")
+    message(STATUS "WARNING compute nodes with the CrayPE compiler wrappers,")
+    message(STATUS "WARNING please re-run the build script from a clean")
+    message(STATUS "WARNING build directory using CMake >= 3.5.")
+    message(STATUS "WARNING")
+    message(STATUS "WARNING If not targeting compute nodes or explicitly")
+    message(STATUS "WARNING managing the low level compiler settings yourself")
+    message(STATUS "WARNING then this warning can be safely ignored.")
+    message(STATUS "WARNING")
+  elseif(NOT (CMAKE_C_COMPILER_WRAPPER STREQUAL "CrayPrgEnv"))
+    message(STATUS "WARNING")
+    message(STATUS "WARNING It looks like you're building on a Cray but not")
+    message(STATUS "WARNING using the CrayPE compiler wrappers.  While this")
+    message(STATUS "WARNING is an entirely valid configuration, it's usually")
+    message(STATUS "WARNING not the intended behavior if targeting the")
+    message(STATUS "WARNING compute nodes.  Please explicitly set the CC=cc")
+    message(STATUS "WARNING CXX=CC FC=ftn environment variables and re-run the")
+    message(STATUS "WARNING build script from a clean build directory to use")
+    message(STATUS "WARNING the CrayPE compiler wrappers and ensure proper")
+    message(STATUS "WARNING interaction with the module environment for")
+    message(STATUS "WARNING compute nodes if that's the intended behavior")
+    message(STATUS "WARNING")
+    message(STATUS "WARNING If not targeting compute nodes or explicitly")
+    message(STATUS "WARNING managing the low level compiler settings yourself")
+    message(STATUS "WARNING then this warning can be safely ignored.")
+    message(STATUS "WARNING")
+  endif()
+endif()
+EOF
+  system("cmake -P /tmp/" . $$ . "CrayPEWarn.cmake");
+  unlink ("/tmp/". $$ . "CrayPEWarn.cmake");
 }
 
 
