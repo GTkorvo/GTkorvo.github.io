@@ -5,7 +5,7 @@
 %	$hostname  -- the host where the build is performed
 %	$HOME  -- the $HOME environment variable value during the build
 %	$project  --  the project name (like "ffs", "evpath", etc.)
-%	$repository  --  like "kaos" or "github"
+%	$repository  --  like "kaos" or "korvogithub"
 INSTALL_DIRECTORY=$HOME
 
 %   VERSION_TAG  -  various values, including "development", "stable", etc.
@@ -26,8 +26,6 @@ evpath		korvogithub
 % database of archive names, source code tool and repo spec values to use
 %
 % format for each line:  <archive-name>  <tool> <URL>
-kaos svn http://svn.research.cc.gatech.edu/kaos/$project/trunk
-kaosarch svn http://svn.research.cc.gatech.edu/kaos/$project/trunk
 korvogithub git https://github.com/GTkorvo/$project.git
 
 % special flags
@@ -50,17 +48,15 @@ BUILD_AREA=$HOME/nightly_build_area
 %	$hostname  -- the host where the build is performed
 %	$HOME  -- the $HOME environment variable value during the build
 %	$project  --  the project name (like "ffs", "evpath", etc.)
-%	$repository  --  like "kaos" or "github"
-kaos configure
-kaos cmake
+%	$repository  --  like "kaos" or "korvogithub"
+korvogithub configure
+korvogithub cmake
 %
 %
 %   The entries below are often useful on HPC machines that require/desire static linking.
-%	To use, comment out the kaos and korvogithub lines above and uncomment those below.
+%	To use, comment out the korvogithub lines above and uncomment those below.
 %       If you use these, comment out everything after 'evpath' in the 'BUILDLIST' above.
 %
-% kaos configure --disable-shared CC=cc CXX=CC
-% kaos cmake -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC -DBUILD_SHARED_STATIC=STATIC -DCMAKE_C_FLAGS=-fPIC  -DTARGET_CNL=1
 % korvogithub configure --disable-shared CC=cc CXX=CC
-% korvogithub cmake -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC -DBUILD_SHARED_STATIC=STATIC -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC -DTARGET_CNL=1
+% korvogithub cmake -DCMAKE_C_COMPILER=cc -DCMAKE_CXX_COMPILER=CC -DBUILD_SHARED_LIBS=OFF -DCMAKE_C_FLAGS=-fPIC -DCMAKE_CXX_FLAGS=-fPIC -DTARGET_CNL=1
 %
