@@ -69,6 +69,9 @@ EVPath. Libfabric can be downloaded here: <a
  href="https://ofiwg.github.io/libfabric/">https://ofiwg.github.io/libfabric/</a>.
 Currently the EVPath fabric transport is known to function only over
 libfabric’s VERBS and SOCKETS providers.  As with libffi, libfabric must be built and installed prior to the korvo_build invocation.
-    
+
+IF YOU DON'T WANT EVPATH TO BUILD WITH ANY RDMA TRANSPORTS, edit the
+build_config (or korvo_build_config) file to add the string
+"-DEVPATH_NO_RDMA=1" to the cmake arguments.
 
 </div><!-- /.blurb -->
