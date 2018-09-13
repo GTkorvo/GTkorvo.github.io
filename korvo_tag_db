@@ -1,11 +1,10 @@
 $korvo_tag{"development"} = "dill:HEAD cercs_env:HEAD atl:HEAD ffs:HEAD
 	enet:HEAD nnti:HEAD df_shm:HEAD evpath:HEAD soapstone:HEAD echo2:HEAD
 	comm_group:HEAD cmrpc:HEAD pds:HEAD gs:HEAD lgs:HEAD amaze:HEAD libbench:HEAD";
-$korvo_tag{"stable"} = " dill:4be1ccfe2a4901180162d572c84e1e6da42885ca
-	atl:2e96cc746d3735c23723c3ac85d90906ec7153bd ffs:3c35deb19064a1b410d9c60d936ba23860bfbd8e
-	evpath:ac054b8d6ecefd9df4d9464b219a794e3bbcb526 echo2:27575 comm_group:27575 cmrpc:27575
-	pds:27575 gs:27575 nnti:a7f43ebe8e909087f080c281931035045ae4ab53
-	enet:197c41755876c902e8a842c9991fa3f0e5f91ae3 lgs:27575 libbench:27575";
+$korvo_tag{"stable"} = " dill:84f5763ae53aec2ae71854921d558f9732dd07fc
+	atl:94637a701e9aa4a32f874ebfde92aeadff69cd34 ffs:c269085d3c9ceb462385084a8a7c8f0223057c14
+	evpath:7dd76e8c6eac87fe8bb27111fe8430334d3eeaa3
+	enet:197c41755876c902e8a842c9991fa3f0e5f91ae3";
 $korvo_tag{"evpath-3.2"} = "dill:7f6f12e583cdfe529b502a6fdaefd60eaec51d3b
     cercs_env:44c14b09005bee9a5a32a4c8b97f4e023a24028e
     atl:7a70d96d356a2b7e8d6ff643a3e2bd5757708e3c
